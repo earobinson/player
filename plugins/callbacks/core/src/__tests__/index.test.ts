@@ -1,9 +1,9 @@
 import { it, expect } from "vitest";
-import { FlowExpressionsPlugin } from "../index";
+import { CallbacksPlugin } from "../index";
 import { Flow, InProgressState, Player } from "@player-ui/player";
 
 it("should register local expressions with the correct prefix", () => {
-  const player = new Player({ plugins: [new FlowExpressionsPlugin()] });
+  const player = new Player({ plugins: [new CallbacksPlugin()] });
 
   const flow: Flow = {
     id: "test",

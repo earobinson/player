@@ -8,11 +8,11 @@ import type {
 export type LocalExpressionMap = Map<string, ExpressionHandler<any[], any>>;
 
 /**
- * The FlowExpressionsPlugin makes flow-level expressions available as operators in the expression evaluator.
+ * The CallbacksPlugin makes flow-level expressions available as operators in the expression evaluator.
  * This allows expressions defined in the flow to be used directly in the expression evaluator.
  */
-export class FlowExpressionsPlugin implements PlayerPlugin {
-  name = "FlowExpressionsPlugin";
+export class CallbacksPlugin implements PlayerPlugin {
+  name = "CallbacksPlugin";
 
   apply(player: Player): void {
     let expressions: any = {};
