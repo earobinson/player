@@ -1,0 +1,108 @@
+---
+title: Callbacks Plugin
+description: A plugin that allows defining callback expressions in flows to be used by components
+---
+
+# Callbacks Plugin
+
+The Callbacks Plugin allows you to define callback expressions at the flow level and use them as event handlers in your components. This is useful for creating reusable callback logic that can be referenced by multiple components within a flow.
+
+## Usage
+
+```typescript
+import { Player } from "@player-ui/player";
+import { CallbackPlugin } from "@player-ui/callback-plugin";
+
+const player = new Player({
+  plugins: [new CallbackPlugin()]
+});
+```
+
+## Configuration
+
+The plugin automatically reads callback expressions from your flow definition and makes them available to components. No additional configuration is required.
+
+## Example
+
+Here's an example of how to define and use callbacks in your flow:
+
+```json
+{
+  "id": "my-flow",
+  "callbacks": {
+    "incrementCounter": "{{counter}} = {{counter}} + 1",
+    "toggleFlag": "{{flag}} = !{{flag}}",
+    "resetForm": [
+      "{{form.name}} = ''",
+      "{{form.email}} = ''",
+      "{{form.submitted}} = false"
+    ]
+  },
+  "views": [
+    {
+      "id": "my-view",
+      "type": "view",
+      "title": "Callback Example",
+      "body": {
+        "id": "container",
+        "type": "container",
+        "items": [
+          {
+            "id": "increment-button",
+            "type": "button",
+            "label": "Increment Counter",
+            "onPress": "@[callback:incrementCounter]@"
+          },
+          {
+            "id": "toggle-button",
+            "type": "button",
+            "label": "Toggle Flag",
+            "onPress": "@[callback:toggleFlag]@"
+          },
+          {
+            "id": "reset-button",
+            "type": "button",
+            "label": "Reset Form",
+            "onPress": "@[callback:resetForm]@"
+          }
+        ]
+      }
+    }
+  ],
+  "data": {
+    "counter": 0,
+    "flag": false,
+    "form": {
+      "name": "",
+      "email": "",
+      "submitted": false
+    }
+  }
+}
+```
+
+## How It Works
+
+The Callbacks Plugin:
+
+1. Extracts callback expressions defined in the `callbacks` section of your flow
+2. Processes all view components before rendering to find callback references in the format `@[callback:name]@`
+3. Replaces these references with functions that evaluate the corresponding callback expression when called
+
+This allows you to define your event handling logic once and reuse it across multiple components.
+
+## Benefits
+
+- **DRY (Don't Repeat Yourself)**: Define callback logic once and reuse it throughout your flow
+- **Separation of Concerns**: Keep UI structure and event handling logic separate
+- **Maintainability**: Update callback logic in one place and have it applied everywhere
+
+## Callback Reference Format
+
+To reference a callback in a component, use the following format:
+
+```
+@[callback:callbackName]@
+```
+
+Where `callbackName` is the name of the callback defined in the flow's `callbacks` section. 
